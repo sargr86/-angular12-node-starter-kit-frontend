@@ -6,6 +6,7 @@ import { AppComponent } from '@app/app.component';
 import {CoreModule} from '@core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MaterialModule} from '@core/modules/material.module';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {MaterialModule} from '@core/modules/material.module';
     AppRoutingModule,
     CoreModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
