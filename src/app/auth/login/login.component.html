@@ -1,1 +1,28 @@
-<p>login works!</p>
+<h1>Login</h1>
+<form [formGroup]="loginForm">
+
+
+  <div>
+    <!-- E-mail field -->
+    <input placeholder="Email" formControlName="email">
+    <span class="error" *ngIf="email.hasError('required') && isSubmitted">
+          E-mail is <strong>required</strong>
+    </span>
+    <span class="error" *ngIf="email.hasError('patternInvalid')">
+          E-mail is <strong>invalid</strong>
+    </span>
+  </div>
+
+  <!-- Password field -->
+  <div>
+    <input placeholder="Password" type="password" formControlName="password">
+    <span class="error" *ngIf="pass.hasError('required') && isSubmitted">
+          Password is <strong>required</strong>
+    </span>
+  </div>
+  <a class="forgot-password" routerLink="/auth/forgot-password">Forgot password?</a>
+
+  <div>
+    <button (click)="login()">Login</button>
+  </div>
+</form>

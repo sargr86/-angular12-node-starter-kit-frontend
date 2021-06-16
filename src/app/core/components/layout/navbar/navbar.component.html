@@ -1,1 +1,2 @@
-<p>navbar works!</p>
+<a routerLink="/auth/login" [hidden]="router.url.includes('login')">Login</a>
+<a routerLink="/auth/register" [hidden]="router.url.includes('register')">Register</a>

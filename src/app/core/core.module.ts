@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {LeftSidebarComponent} from './components/layout/left-sidebar/left-sidebar.component';
 import {NavbarComponent} from './components/layout/navbar/navbar.component';
 import {MaterialModule} from './modules/material.module';
+import {ToastrModule} from 'ngx-toastr';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -12,7 +14,9 @@ import {MaterialModule} from './modules/material.module';
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    ToastrModule.forRoot(),
+    RouterModule,
   ],
   exports: [
     LeftSidebarComponent,
