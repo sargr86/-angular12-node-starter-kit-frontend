@@ -1,1 +1,35 @@
-<p>register works!</p>
+<h1>Registration</h1>
+<form [formGroup]="registrationForm">
+
+  <!-- Full name field -->
+  <div>
+    <input placeholder="Full name" formControlName="full_name">
+    <span class="error" *ngIf="fullName.hasError('required') && isSubmitted">
+          Full name is <strong>required</strong>
+    </span>
+  </div>
+
+
+  <!-- E-mail field -->
+  <div>
+    <input placeholder="Email" formControlName="email">
+    <span class="error" *ngIf="email.hasError('required') && isSubmitted">
+          E-mail is <strong>required</strong>
+    </span>
+    <span class="error" *ngIf="email.hasError('patternInvalid')">
+          E-mail is <strong>invalid</strong>
+    </span>
+  </div>
+
+  <!-- Password field -->
+  <div>
+    <input placeholder="Password" type="password" formControlName="password">
+    <span class="error" *ngIf="pass.hasError('required') && isSubmitted">
+          Password is <strong>required</strong>
+    </span>
+  </div>
+
+  <div>
+    <button (click)="register()">Register</button>
+  </div>
+</form>
