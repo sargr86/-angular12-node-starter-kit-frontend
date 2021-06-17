@@ -1,59 +1,63 @@
-<h1>Registration</h1>
-<form [formGroup]="registrationForm" [hidden]="codeSent">
+<div id="registration-form-container" [hidden]="codeSent">
+  <h1>Registration</h1>
+  <form [formGroup]="registrationForm">
 
-  <!-- First name field -->
-  <div class="row">
-    <input placeholder="First name" formControlName="first_name">
-    <span class="error" *ngIf="firstName.hasError('required') && isSubmitted">
+    <!-- First name field -->
+    <div class="row">
+      <input placeholder="First name" formControlName="first_name">
+      <span class="error" *ngIf="firstName.hasError('required') && isSubmitted">
           First name is <strong>required</strong>
     </span>
-  </div>
+    </div>
 
-  <!-- Last name field -->
-  <div class="row">
-    <input placeholder="Last name" formControlName="last_name">
-    <span class="error" *ngIf="lastName.hasError('required') && isSubmitted">
+    <!-- Last name field -->
+    <div class="row">
+      <input placeholder="Last name" formControlName="last_name">
+      <span class="error" *ngIf="lastName.hasError('required') && isSubmitted">
           Last name is <strong>required</strong>
     </span>
-  </div>
+    </div>
 
-  <!-- Gender field -->
-  <div class="row">
-    <label>
-      <input type="radio" [value]="0" formControlName="gender">
-      <span>Male</span>
-    </label>
-    <label>
-      <input type="radio" [value]="1" formControlName="gender">
-      <span>Female</span>
-    </label>
-  </div>
+    <!-- Gender field -->
+    <div class="row">
+      <label>
+        <input type="radio" [value]="0" formControlName="gender">
+        <span>Male</span>
+      </label>
+      <label>
+        <input type="radio" [value]="1" formControlName="gender">
+        <span>Female</span>
+      </label>
+    </div>
 
-  <!-- E-mail field -->
-  <div class="row">
-    <input placeholder="E-mail" formControlName="email">
-    <span class="error" *ngIf="email.hasError('required') && isSubmitted">
+    <!-- E-mail field -->
+    <div class="row">
+      <input placeholder="E-mail" formControlName="email">
+      <span class="error" *ngIf="email.hasError('required') && isSubmitted">
           E-mail is <strong>required</strong>
     </span>
-    <span class="error" *ngIf="email.hasError('patternInvalid')">
+      <span class="error" *ngIf="email.hasError('patternInvalid')">
           E-mail is <strong>invalid</strong>
     </span>
-  </div>
+    </div>
 
-  <!-- Password field -->
-  <div class="row">
-    <input placeholder="Password" type="password" formControlName="password">
-    <span class="error" *ngIf="pass.hasError('required') && isSubmitted">
+    <!-- Password field -->
+    <div class="row">
+      <input placeholder="Password" type="password" formControlName="password">
+      <span class="error" *ngIf="pass.hasError('required') && isSubmitted">
           Password is <strong>required</strong>
     </span>
-  </div>
+    </div>
 
-  <div>
-    <button (click)="sendVerificationCode()">Register</button>
-  </div>
-</form>
-<form [formGroup]="verificationForm" [hidden]="!codeSent">
-  <input formControlName="verification_code">
-  <button (click)="verifyCode()">Verify</button>
-</form>
+    <div>
+      <button (click)="sendVerificationCode()">Register</button>
+    </div>
+  </form>
+</div>
+<div id="verification-form-container" [hidden]="!codeSent">
+  <form [formGroup]="verificationForm">
+    <input formControlName="verification_code">
+    <button (click)="verifyCode()">Verify</button>
+  </form>
+</div>
 

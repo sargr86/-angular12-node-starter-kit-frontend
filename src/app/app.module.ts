@@ -6,8 +6,9 @@ import {AppComponent} from '@app/app.component';
 import {CoreModule} from '@core/core.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '@core/modules/material.module';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
+import {RequestInterceptor} from '@core/helpers/http.interceptor';
 
 // Token getter for JWT module
 export function tokenGetter() {
@@ -35,7 +36,13 @@ export function tokenGetter() {
     }),
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
