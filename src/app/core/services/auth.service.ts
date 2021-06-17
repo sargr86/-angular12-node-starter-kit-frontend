@@ -22,6 +22,10 @@ export class AuthService {
     return this.httpClient.post<User>(`${API_URL}auth/register`, params);
   }
 
+  sendVerificationCode(params: User) {
+    return this.httpClient.post<User>(`${API_URL}auth/send-verification-code`, params);
+  }
+
   loggedIn() {
     return !this.jwtHelper.isTokenExpired();
   }

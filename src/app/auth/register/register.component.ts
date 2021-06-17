@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 import {patternValidator} from '@core/helpers/pattern-validator';
 import {EMAIL_PATTERN} from '@core/constants/patterns';
+import {AuthService} from '@core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -12,28 +13,45 @@ import {EMAIL_PATTERN} from '@core/constants/patterns';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   registrationForm: FormGroup;
+  verificationForm: FormGroup;
   subscriptions: Subscription[] = [];
   isSubmitted = false;
+  codeVerified = false;
+  codeSent = false;
 
   constructor(
     private fb: FormBuilder,
-    public router: Router
+    public router: Router,
+    public auth: AuthService
   ) {
     this.registrationForm = this.fb.group({
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
-      gender: ['', Validators.required],
+      first_name: ['Test', Validators.required],
+      last_name: ['User', Validators.required],
+      gender: [0, Validators.required],
       email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
       password: ['', Validators.required],
+    });
+
+    this.verificationForm = this.fb.group({
+      verification_code: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
   }
 
-  register(): void {
-
+  sendVerificationCode() {
+    this.subscriptions.push(this.auth.sendVerificationCode(this.registrationForm.value).subscribe(dt => {
+      this.codeSent = true;
+    }));
   }
+
+  verifyCode(): void {
+    this.subscriptions.push(this.auth.register({...this.registrationForm.value, ...this.verificationForm.value}).subscribe(dt => {
+
+    }));
+  }
+
 
   get firstName(): AbstractControl {
     return this.registrationForm.controls.first_name;

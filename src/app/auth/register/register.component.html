@@ -1,5 +1,5 @@
 <h1>Registration</h1>
-<form [formGroup]="registrationForm">
+<form [formGroup]="registrationForm" [hidden]="codeSent">
 
   <!-- First name field -->
   <div class="row">
@@ -20,12 +20,12 @@
   <!-- Gender field -->
   <div class="row">
     <label>
-      <input type="radio" value="Male" formControlName="gender">
-      <span>male</span>
+      <input type="radio" [value]="0" formControlName="gender">
+      <span>Male</span>
     </label>
     <label>
-      <input type="radio" value="Female" formControlName="gender">
-      <span>female</span>
+      <input type="radio" [value]="1" formControlName="gender">
+      <span>Female</span>
     </label>
   </div>
 
@@ -49,6 +49,11 @@
   </div>
 
   <div>
-    <button (click)="register()">Register</button>
+    <button (click)="sendVerificationCode()">Register</button>
   </div>
 </form>
+<form [formGroup]="verificationForm" [hidden]="!codeSent">
+  <input formControlName="verification_code">
+  <button (click)="verifyCode()">Verify</button>
+</form>
+
