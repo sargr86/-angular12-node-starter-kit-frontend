@@ -2,7 +2,7 @@
 <form [formGroup]="registrationForm">
 
   <!-- First name field -->
-  <div>
+  <div class="row">
     <input placeholder="First name" formControlName="first_name">
     <span class="error" *ngIf="firstName.hasError('required') && isSubmitted">
           First name is <strong>required</strong>
@@ -10,16 +10,27 @@
   </div>
 
   <!-- Last name field -->
-  <div>
+  <div class="row">
     <input placeholder="Last name" formControlName="last_name">
     <span class="error" *ngIf="lastName.hasError('required') && isSubmitted">
           Last name is <strong>required</strong>
     </span>
   </div>
 
+  <!-- Gender field -->
+  <div class="row">
+    <label>
+      <input type="radio" value="Male" formControlName="gender">
+      <span>male</span>
+    </label>
+    <label>
+      <input type="radio" value="Female" formControlName="gender">
+      <span>female</span>
+    </label>
+  </div>
 
   <!-- E-mail field -->
-  <div>
+  <div class="row">
     <input placeholder="E-mail" formControlName="email">
     <span class="error" *ngIf="email.hasError('required') && isSubmitted">
           E-mail is <strong>required</strong>
@@ -30,7 +41,7 @@
   </div>
 
   <!-- Password field -->
-  <div>
+  <div class="row">
     <input placeholder="Password" type="password" formControlName="password">
     <span class="error" *ngIf="pass.hasError('required') && isSubmitted">
           Password is <strong>required</strong>
