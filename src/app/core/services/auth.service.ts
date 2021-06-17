@@ -18,8 +18,8 @@ export class AuthService {
     return this.httpClient.post<User>(`${API_URL}auth/login`, params);
   }
 
-  register(params: User) {
-    return this.httpClient.post<User>(`${API_URL}auth/register`, params);
+  verifyCode(params: User) {
+    return this.httpClient.post<User>(`${API_URL}auth/verify-code`, params);
   }
 
   sendVerificationCode(params: User) {

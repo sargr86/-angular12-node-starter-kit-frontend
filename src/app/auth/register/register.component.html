@@ -56,7 +56,7 @@
 </div>
 <div id="verification-form-container" [hidden]="!codeSent">
   <form [formGroup]="verificationForm">
-    <input formControlName="verification_code">
+    <input formControlName="token">
     <button (click)="verifyCode()">Verify</button>
   </form>
 </div>

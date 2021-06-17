@@ -28,12 +28,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       first_name: ['Test', Validators.required],
       last_name: ['User', Validators.required],
       gender: [0, Validators.required],
-      email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
+      email: ['sofiabruno3003@gmail.com', [Validators.required, patternValidator(EMAIL_PATTERN)]],
       password: ['', Validators.required],
     });
 
     this.verificationForm = this.fb.group({
-      verification_code: ['', Validators.required]
+      token: ['', Validators.required]
     });
   }
 
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   verifyCode(): void {
-    this.subscriptions.push(this.auth.register({...this.registrationForm.value, ...this.verificationForm.value}).subscribe(dt => {
+    this.subscriptions.push(this.auth.verifyCode({...this.registrationForm.value, ...this.verificationForm.value}).subscribe(dt => {
 
     }));
   }
