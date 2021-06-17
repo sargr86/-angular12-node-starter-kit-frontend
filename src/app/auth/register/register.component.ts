@@ -33,8 +33,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   }
 
-  get fullName(): AbstractControl {
-    return this.registrationForm.controls.full_name;
+  get firstName(): AbstractControl {
+    return this.registrationForm.controls.first_name;
+  }
+
+  get lastName(): AbstractControl {
+    return this.registrationForm.controls.last_name;
   }
 
   get email(): AbstractControl {

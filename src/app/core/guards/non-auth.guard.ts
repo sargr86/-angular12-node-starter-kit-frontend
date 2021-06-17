@@ -13,8 +13,8 @@ export class NonAuthGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.auth.loggedIn();
+    state: RouterStateSnapshot): boolean {
+    return !this.auth.loggedIn();
   }
 
 }
