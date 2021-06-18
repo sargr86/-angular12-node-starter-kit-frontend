@@ -14,12 +14,12 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   registrationForm: FormGroup;
-  verificationForm: FormGroup;
+
   subscriptions: Subscription[] = [];
   isSubmitted = false;
-  codeVerified = false;
+
   codeSent = false;
-  codeReSent = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -35,30 +35,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
       password: ['', Validators.required],
     });
 
-    this.verificationForm = this.fb.group({
-      token: ['', Validators.required]
-    });
+
   }
 
   ngOnInit(): void {
   }
 
-  sendVerificationCode(resend = false) {
+  sendVerificationCode() {
     this.subscriptions.push(this.auth.sendVerificationCode(this.registrationForm.value).subscribe(msg => {
       this.codeSent = true;
-      if (resend) {
-        this.codeReSent = true;
-        this.toastr.success('The code has been resent to your e-mail')
-      } else {
-        this.toastr.success('The code has been sent to your e-mail')
-      }
-    }));
-  }
-
-  verifyCode(): void {
-    this.subscriptions.push(this.auth.verifyCode({...this.registrationForm.value, ...this.verificationForm.value}).subscribe(dt => {
-      this.codeVerified = true;
-      this.toastr.success('The code verified successfully');
+      this.toastr.success('The code has been sent to your e-mail')
     }));
   }
 
