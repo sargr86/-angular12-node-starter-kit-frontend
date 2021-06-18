@@ -50,6 +50,10 @@
     </div>
 
     <div>
+      <p>
+        After successful form submission we will sent you a verification code that will be valid only for
+        <strong>20 seconds</strong>.<br> So please open your e-mail in another tab to prepare code receiving.
+      </p>
       <button (click)="sendVerificationCode()">Register</button>
     </div>
   </form>
@@ -58,6 +62,8 @@
   <form [formGroup]="verificationForm">
     <input formControlName="token">
     <button (click)="verifyCode()">Verify</button>
+    <p>Please note that the code will be valid only for <strong>20 seconds</strong></p>
+    <p (click)="sendVerificationCode(true)">Resend code</p>
   </form>
 </div>
 

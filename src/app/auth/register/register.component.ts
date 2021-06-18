@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {patternValidator} from '@core/helpers/pattern-validator';
 import {EMAIL_PATTERN} from '@core/constants/patterns';
 import {AuthService} from '@core/services/auth.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -18,11 +19,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isSubmitted = false;
   codeVerified = false;
   codeSent = false;
+  codeReSent = false;
 
   constructor(
     private fb: FormBuilder,
     public router: Router,
-    public auth: AuthService
+    public auth: AuthService,
+    private toastr: ToastrService
   ) {
     this.registrationForm = this.fb.group({
       first_name: ['Test', Validators.required],
@@ -40,15 +43,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
-  sendVerificationCode() {
-    this.subscriptions.push(this.auth.sendVerificationCode(this.registrationForm.value).subscribe(dt => {
+  sendVerificationCode(resend = false) {
+    this.subscriptions.push(this.auth.sendVerificationCode(this.registrationForm.value).subscribe(msg => {
       this.codeSent = true;
+      if (resend) {
+        this.codeReSent = true;
+        this.toastr.success('The code has been resent to your e-mail')
+      } else {
+        this.toastr.success('The code has been sent to your e-mail')
+      }
     }));
   }
 
   verifyCode(): void {
     this.subscriptions.push(this.auth.verifyCode({...this.registrationForm.value, ...this.verificationForm.value}).subscribe(dt => {
-
+      this.codeVerified = true;
+      this.toastr.success('The code verified successfully');
     }));
   }
 
