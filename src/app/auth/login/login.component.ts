@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {patternValidator} from '@core/helpers/pattern-validator';
 import {EMAIL_PATTERN} from '@core/constants/patterns';
 import {Router} from '@angular/router';
+import {AuthService} from '@core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    public router: Router
+    public router: Router,
+    public auth: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
@@ -29,7 +31,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
+    this.auth.login(this.loginForm.value).subscribe(dt => {
 
+    });
   }
 
   get email(): AbstractControl {
