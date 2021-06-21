@@ -5,6 +5,7 @@ import {AuthService} from '@core/services/auth.service';
 import {ToastrService} from 'ngx-toastr';
 import {Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
+import {AuthGuard} from '@core/guards/auth.guard';
 
 @Component({
   selector: 'app-verify-account',
@@ -22,7 +23,8 @@ export class VerifyAccountComponent implements OnInit, OnDestroy {
     public router: Router,
     private route: ActivatedRoute,
     public auth: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authGuard: AuthGuard
   ) {
   }
 
@@ -34,9 +36,10 @@ export class VerifyAccountComponent implements OnInit, OnDestroy {
 
 
   verifyCode(params: Data): void {
-    this.subscriptions.push(this.auth.verifyCode(params).subscribe(dt => {
+    this.subscriptions.push(this.auth.verifyCode(params).subscribe(async (dt) => {
       this.codeVerified = true;
-      this.toastr.success('The code verified successfully');
+      localStorage.setItem('token', dt?.token || '');
+      await this.router.navigateByUrl(this.authGuard.redirectUrl || '/');
     }));
   }
 

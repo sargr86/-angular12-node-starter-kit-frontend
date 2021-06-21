@@ -1,3 +1,10 @@
-<a routerLink="/" [hidden]="router.url==='/'">Home</a>
-<a routerLink="/auth/login" [hidden]="router.url.includes('login')">Login</a>
-<a routerLink="/auth/register" [hidden]="router.url.includes('register')">Register</a>
+<nav>
+  <div class="left-group">
+    <a routerLink="/" [hidden]="router.url==='/'">Home</a>
+  </div>
+  <div class="right-group">
+    <a routerLink="/auth/login" [hidden]="router.url.includes('login') || auth.loggedIn()">Login</a>
+    <a routerLink="/auth/register" [hidden]="router.url.includes('register')|| auth.loggedIn()">Register</a>
+    <a (click)="logOut()" [hidden]="!auth.loggedIn()">Log out</a>
+  </div>
+</nav>
