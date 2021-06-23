@@ -6,6 +6,9 @@ import {patternValidator} from '@core/helpers/pattern-validator';
 import {EMAIL_PATTERN} from '@core/constants/patterns';
 import {AuthService} from '@core/services/auth.service';
 import {ToastrService} from 'ngx-toastr';
+import {DROPZONE_CONFIG, DropzoneConfigInterface} from 'ngx-dropzone-wrapper';
+import {DEFAULT_DROPZONE_CONFIG} from '@core/constants/global';
+import {DropzoneEvent} from 'ngx-dropzone-wrapper/lib/dropzone.interfaces';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +22,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isSubmitted = false;
 
   codeSent = false;
+
+  dropzoneConfig: DropzoneConfigInterface = DEFAULT_DROPZONE_CONFIG;
+  dropzoneFiles: File[] = [];
 
 
   constructor(
@@ -49,6 +55,25 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.toastr.success('The code has been sent to your e-mail')
       }));
     }
+  }
+
+  // buildFormData(data){
+  //   const fd: FormData = new FormData();
+  //
+  //   for (const field of Object.keys(data)) {
+  //     fd.append(field, data[field] ? data[field] : '');
+  //   }
+  // }
+
+  onAddedFile(file: File) {
+    console.log(file)
+    // this.dropzoneFiles.push(e[0]);
+    // this.registrationForm.patchValue({avatar: e[0].name});
+    // console.log(e)
+  }
+
+  removeImage() {
+
   }
 
 

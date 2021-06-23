@@ -1,64 +1,73 @@
 <div id="registration-form-container">
-  <h1>Registration</h1>
-  <form [formGroup]="registrationForm">
+  <div class="left-group">
+    <h1>Registration</h1>
+    <form [formGroup]="registrationForm">
 
-    <!-- First name field -->
-    <div class="row">
-      <input placeholder="First name" formControlName="first_name">
-      <span class="error" *ngIf="firstName.hasError('required') && isSubmitted">
+      <!-- First name field -->
+      <div class="row">
+        <input placeholder="First name" formControlName="first_name">
+        <span class="error" *ngIf="firstName.hasError('required') && isSubmitted">
           First name is <strong>required</strong>
     </span>
-    </div>
+      </div>
 
-    <!-- Last name field -->
-    <div class="row">
-      <input placeholder="Last name" formControlName="last_name">
-      <span class="error" *ngIf="lastName.hasError('required') && isSubmitted">
+      <!-- Last name field -->
+      <div class="row">
+        <input placeholder="Last name" formControlName="last_name">
+        <span class="error" *ngIf="lastName.hasError('required') && isSubmitted">
           Last name is <strong>required</strong>
     </span>
-    </div>
+      </div>
 
-    <!-- Gender field -->
-    <div class="row">
-      <label>
-        <input type="radio" [value]="0" formControlName="gender">
-        <span>Male</span>
-      </label>
-      <label>
-        <input type="radio" [value]="1" formControlName="gender">
-        <span>Female</span>
-      </label>
-    </div>
+      <!-- Gender field -->
+      <div class="row">
+        <label>
+          <input type="radio" [value]="0" formControlName="gender">
+          <span>Male</span>
+        </label>
+        <label>
+          <input type="radio" [value]="1" formControlName="gender">
+          <span>Female</span>
+        </label>
+      </div>
 
-    <div class="row">
-
-    </div>
-
-    <!-- E-mail field -->
-    <div class="row">
-      <input placeholder="E-mail" formControlName="email">
-      <span class="error" *ngIf="email.hasError('required') && isSubmitted">
+      <!-- E-mail field -->
+      <div class="row">
+        <input placeholder="E-mail" formControlName="email">
+        <span class="error" *ngIf="email.hasError('required') && isSubmitted">
           E-mail is <strong>required</strong>
     </span>
-      <span class="error" *ngIf="email.hasError('patternInvalid')">
+        <span class="error" *ngIf="email.hasError('patternInvalid')">
           E-mail is <strong>invalid</strong>
     </span>
-    </div>
+      </div>
 
-    <!-- Password field -->
-    <div class="row">
-      <input placeholder="Password" type="password" formControlName="password">
-      <span class="error" *ngIf="pass.hasError('required') && isSubmitted">
+      <!-- Password field -->
+      <div class="row">
+        <input placeholder="Password" type="password" formControlName="password">
+        <span class="error" *ngIf="pass.hasError('required') && isSubmitted">
           Password is <strong>required</strong>
     </span>
-    </div>
+      </div>
 
-    <div>
-      <p>After form submission we will send you a <strong>verification code to your email</strong> with account
-        activation instructions</p>
-      <button (click)="sendVerificationCode()">Register</button>
-    </div>
-  </form>
+      <div class="row">
+        <input type="file">
+      </div>
+
+      <div>
+        <p>After form submission we will send you a <strong>verification code to your email</strong> with account
+          activation instructions</p>
+        <button (click)="sendVerificationCode()">Register</button>
+      </div>
+    </form>
+  </div>
+  <div class="right-group">
+    <!-- Showing drop zone for non-authenticated user and for a user without a profile image -->
+    <dropzone [config]="dropzoneConfig" class="single" (removedFile)="removeImage()"
+              id="dropzone" #dropzone (thumbnail)="onAddedFile($event[0])"
+              [message]="'Click or drag an image to upload'">
+    </dropzone>
+  </div>
 </div>
 
 
