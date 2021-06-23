@@ -42,10 +42,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   sendVerificationCode() {
-    this.subscriptions.push(this.auth.sendVerificationCode(this.registrationForm.value).subscribe(msg => {
-      this.codeSent = true;
-      this.toastr.success('The code has been sent to your e-mail')
-    }));
+    this.isSubmitted = true;
+    if (this.registrationForm.valid) {
+      this.subscriptions.push(this.auth.sendVerificationCode(this.registrationForm.value).subscribe(msg => {
+        this.codeSent = true;
+        this.toastr.success('The code has been sent to your e-mail')
+      }));
+    }
   }
 
 
