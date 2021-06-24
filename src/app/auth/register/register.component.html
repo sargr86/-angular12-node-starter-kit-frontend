@@ -1,4 +1,4 @@
-<div id="registration-form-container">
+<div id="registration-form-container" [hidden]="codeSent">
   <div class="left-group">
     <h1>Registration</h1>
     <form [formGroup]="registrationForm">
@@ -22,11 +22,11 @@
       <!-- Gender field -->
       <div class="row">
         <label>
-          <input type="radio" [value]="0" formControlName="gender">
+          <input type="radio" [value]="'male'" formControlName="gender">
           <span>Male</span>
         </label>
         <label>
-          <input type="radio" [value]="1" formControlName="gender">
+          <input type="radio" [value]="'female'" formControlName="gender">
           <span>Female</span>
         </label>
       </div>
@@ -50,10 +50,6 @@
     </span>
       </div>
 
-      <div class="row">
-        <input type="file">
-      </div>
-
       <div>
         <p>After form submission we will send you a <strong>verification code to your email</strong> with account
           activation instructions</p>
@@ -68,6 +64,10 @@
               [message]="'Click or drag an image to upload'">
     </dropzone>
   </div>
+</div>
+<div [hidden]="!codeSent" id="code-resend-container">
+  <h1>The code is sent</h1>
+  <p>If you didn't receive the code, please <strong (click)="sendVerificationCode()">resend</strong> it.</p>
 </div>
 
 

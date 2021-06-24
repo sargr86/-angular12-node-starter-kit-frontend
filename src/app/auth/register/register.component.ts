@@ -9,6 +9,7 @@ import {ToastrService} from 'ngx-toastr';
 import {DROPZONE_CONFIG, DropzoneConfigInterface} from 'ngx-dropzone-wrapper';
 import {DEFAULT_DROPZONE_CONFIG} from '@core/constants/global';
 import {DropzoneEvent} from 'ngx-dropzone-wrapper/lib/dropzone.interfaces';
+import {BuildFormDataPipe} from '@shared/pipes/build-form-data.pipe';
 
 @Component({
   selector: 'app-register',
@@ -24,21 +25,24 @@ export class RegisterComponent implements OnInit, OnDestroy {
   codeSent = false;
 
   dropzoneConfig: DropzoneConfigInterface = DEFAULT_DROPZONE_CONFIG;
-  dropzoneFiles: File[] = [];
+  uploadFiles: File[] = [];
 
 
   constructor(
     private fb: FormBuilder,
     public router: Router,
     public auth: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private buildFormData: BuildFormDataPipe
   ) {
     this.registrationForm = this.fb.group({
       first_name: ['Test', Validators.required],
       last_name: ['User', Validators.required],
-      gender: [0, Validators.required],
+      gender: ['male', Validators.required],
+      avatar: [''],
+      folder: ['users/avatars'],
       email: ['sofiabruno3003@gmail.com', [Validators.required, patternValidator(EMAIL_PATTERN)]],
-      password: ['', Validators.required],
+      password: ['12345678', Validators.required],
     });
 
 
@@ -49,31 +53,23 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   sendVerificationCode() {
     this.isSubmitted = true;
+    let formData: FormData = this.buildFormData.transform(this.registrationForm.value, this.uploadFiles, 'avatar_file');
     if (this.registrationForm.valid) {
-      this.subscriptions.push(this.auth.sendVerificationCode(this.registrationForm.value).subscribe(msg => {
+      this.subscriptions.push(this.auth.sendVerificationCode(formData).subscribe(msg => {
         this.codeSent = true;
         this.toastr.success('The code has been sent to your e-mail')
       }));
     }
   }
 
-  // buildFormData(data){
-  //   const fd: FormData = new FormData();
-  //
-  //   for (const field of Object.keys(data)) {
-  //     fd.append(field, data[field] ? data[field] : '');
-  //   }
-  // }
-
   onAddedFile(file: File) {
-    console.log(file)
-    // this.dropzoneFiles.push(e[0]);
-    // this.registrationForm.patchValue({avatar: e[0].name});
-    // console.log(e)
+    this.uploadFiles.push(file);
+    this.registrationForm.patchValue({avatar: file.name});
   }
 
   removeImage() {
-
+    this.uploadFiles = [];
+    this.registrationForm.patchValue({avatar: ''});
   }
 
 

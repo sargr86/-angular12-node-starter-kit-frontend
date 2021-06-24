@@ -23,7 +23,7 @@ export class AuthService {
     return this.httpClient.post<User>(`${API_URL}auth/verify-code`, params);
   }
 
-  sendVerificationCode(params: User) {
+  sendVerificationCode(params: FormData) {
     return this.httpClient.post<User>(`${API_URL}auth/send-verification-code`, params);
   }
 

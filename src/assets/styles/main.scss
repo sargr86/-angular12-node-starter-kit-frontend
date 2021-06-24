@@ -32,7 +32,7 @@ li {
   list-style-type: none;
 }
 
-.hidden {
+.hidden, [hidden] {
   display: none !important;
 }
 
